@@ -7,8 +7,14 @@ export default function HexConverter() {
   const [form, setForm] = useState({rgb: ''});
 
   function changeColor() {
-    return {
-      backgroundColor: form.rgb,
+    if (form.rgb !== "Ошибка!") {
+      return {
+        backgroundColor: form.rgb,
+      }
+    } else {
+      return {
+        backgroundColor: "",
+      }
     }
   }
 
@@ -24,12 +30,14 @@ export default function HexConverter() {
 
   const onFormSubmit = (e) => {
     e.preventDefault();
-    console.log(form)
   }
 
   const onInputChange = (e) => {
     if (e.target.value.length === 7) {
       setForm(prev => ({...prev, rgb: convertColor(e.target.value)}))
+    }
+    if (e.target.value.length > 7 || e.target.value.charAt(0) !== '#') {
+      setForm(prev => ({...prev, rgb: "Ошибка!"}));
     }
   }
 
